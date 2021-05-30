@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import mimetypes
 
+# A Bug is was encountering
+# mimetypes.add_type("text/css", ".css", True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -24,6 +29,7 @@ SECRET_KEY = 'django-insecure-q*)8jep!o*-6*9b96_^j@r(3zjkvtx@yz6$%kx$825n-j%7q)&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -125,3 +131,21 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# list of directories where Django will also look for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    'CashierApp/templates/../CashierApp/static/css/',
+]
+
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT, 'CashierApp/templates/css/'),
+# )
+
+# The list of finder backends that know how to find static files in various locations.
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+AUTH_USER_MODEL = "CashierApp.Cashier"

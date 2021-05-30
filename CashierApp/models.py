@@ -1,11 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
 
-class Cashier(models.Model):
-    full_name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+class Cashier(AbstractUser):
     block = models.CharField(max_length=255)
 
 
@@ -22,5 +21,3 @@ class Payment(models.Model):
     amount = models.IntegerField()
     date = models.DateField()
     resident_id = models.ForeignKey(Resident, on_delete=models.CASCADE)
-
-

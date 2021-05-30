@@ -7,23 +7,27 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
 
-    <title>CashierHF</title>
+    <title>CashierApp</title>
   </head>
   <body>
     <h1>Sign In</h1>
 
 
     <div class="container">
-        <form>
+        <form method="post" action="/signin/">
+            {% csrf_token %}
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" name="username">
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control"  name="password">
+          </div>
+          <div class="row">
+              <a href="/registration">Make new registration.</a>
           </div>
           <button type="submit" class="btn btn-primary">Sign In</button>
         </form>

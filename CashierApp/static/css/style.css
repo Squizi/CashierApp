@@ -1,0 +1,11 @@
+h1 {
+    text-align: center;
+}
+
+.border1{
+    border-bottom: black !important;
+    border-top: black !important;
+    border-bottom: 1px;
+    border-top: 1px;
+    margin: 10px;
+}

@@ -7,20 +7,45 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link href="css/style.css" rel="stylesheet">
+    {% load static %}
+    <link href="{% static "/css/style.css"%}" type="text/css" rel="stylesheet">
 
     <title>{% block title %}CashierApp{% endblock %}</title>
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/residents">Residents</a></li>
-            <li><a href="/">Add Payment</a></li>
-        </ul>
-        {% endblock %}
-    </div>
+{#    <div id="sidebar">#}
+{#        {% block sidebar %}#}
+{#        <ul>#}
+{#            <li><a href="/residents">Residents</a></li>#}
+{#            <li><a href="/">Add Payment</a></li>#}
+{#        </ul>#}
+{#        {% endblock %}#}
+{#    </div>#}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/index">Residents</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/payment">Add payment</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/payment">mnogo liubov za sladurcheto <3 </a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/payment">oshte poveche liubov za sladurcheto <33 </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signout">Sign Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <div id="content">
         {% block content %}{% endblock %}

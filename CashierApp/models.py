@@ -12,7 +12,7 @@ class Resident(models.Model):
     full_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     apartment = models.IntegerField()
-    cashier_id = models.ForeignKey(Cashier, on_delete=models.CASCADE)
+    cashier = models.ForeignKey(Cashier, on_delete=models.CASCADE)
 
 
 class Payment(models.Model):
@@ -20,4 +20,4 @@ class Payment(models.Model):
     status = models.CharField(max_length=255)
     amount = models.IntegerField()
     date = models.DateField()
-    resident_id = models.ForeignKey(Resident, on_delete=models.CASCADE)
+    resident = models.ForeignKey(Resident, on_delete=models.CASCADE)

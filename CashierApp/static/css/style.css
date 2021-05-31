@@ -9,3 +9,7 @@ h1 {
     border-top: 1px;
     margin: 10px;
 }
+
+.btn1{
+    align-self: end;
+}

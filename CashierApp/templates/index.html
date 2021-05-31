@@ -8,14 +8,22 @@
     <br>
     <br>
     <div class="container">
+        {% for r in residents %}
         <div class="row border1">
             <div class="col-10">
-                <p>Rumpel Guz</p>
+                <p>{{ r.full_name }}</p>
             </div>
             <div class="col-2">
                 <a href="/index">Details</a>
             </div>
         </div>
+            {% empty %}
+                <p>No residents.</p>
+        {% endfor %}
+        <br>
+        <form action="/resident/">
+            <button type="submit" class="btn btn-dark btn1">Add resident</button>
+        </form>
 {#        <ul class="list-group list-group-flush">#}
 {#            <div class="row">#}
 {#                <li class="list-group-item">An item</li>#}

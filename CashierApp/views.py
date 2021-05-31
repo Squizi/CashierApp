@@ -3,8 +3,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
-from CashierApp.forms import CreateUserForm
-
+from .models import Resident, Payment
+from CashierApp.forms import CreateUserForm, CreateResidentForm, CreatePaymentForm
 
 
 # Create your views here.
@@ -22,10 +22,17 @@ class ResidentsView(TemplateView):
     template_name = 'index.html'
 
 
+class SingleResidentView(TemplateView):
+    template_name = 'resident.html'
+
+
 def index(request):
     if not request.user.is_authenticated:
         return redirect("signin")
-    return render(request, 'index.html')
+
+    residents = Resident.objects.filter(cashier=request.user)
+    context = {'residents': residents}
+    return render(request, 'index.html', context)
 
 
 class AddPaymentsView(TemplateView):
@@ -70,3 +77,42 @@ def signout(request):
     logout(request)
     messages.info(request, "You have successfully signed out.")
     return redirect("signin")
+
+
+def addresident(request):
+    if request.method == 'POST':
+        form = CreateResidentForm(request.POST)
+
+        form.cashier = request.user
+
+        if form.is_valid():
+            resident = Resident()
+            resident.full_name = form["full_name"].value()
+            resident.email = form["email"].value()
+            resident.apartment = form["apartment"].value()
+            resident.cashier = request.user
+            resident.save()
+            return redirect('index')
+    else:
+        form = CreateResidentForm()
+    return render(request, 'resident.html', {'form': form})
+
+
+def addpayment(request):
+    if request.method == 'POST':
+        form = CreatePaymentForm(request.POST)
+
+        residents = Resident.objects.filter(cashier=request.user)
+
+        for r in residents:
+            p = Payment()
+            p.type = form["type"].value()
+            p.status = form["status"].value()
+            p.amount = form["amount"].value()
+            p.date = form["date"].value()
+            p.resident = r
+            p.save()
+        return redirect('index')
+    else:
+        form = CreatePaymentForm()
+    return render(request, 'payment.html', {'form': form})

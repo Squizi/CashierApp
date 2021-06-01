@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}CashierApp{% endblock %}
+
+{% block content %}
+    <br>
+    <h1>{{ resident.full_name }}'s details</h1>
+    <br>
+    <br>
+    <div class="container">
+        <ul class="list-group">
+            {% for p in payments %}
+                {% if p.status == 'Unpaid' %}
+                    <li class="list-group-item list-group-item-danger"> {{ p.type }} is not paid. The amount that needs to be paid is ${{ p.amount }}. <a class="btn btn-danger" href="{% url 'pay' p.id %}">Pay</a> </li>
+                {% endif %}
+                {% empty %}
+                    <p>No new payments.</p>
+            {% endfor %}
+        </ul>
+
+        <ul class="list-group">
+            {% for p in payments %}
+                {% if p.status == 'Paid' %}
+                    <li class="list-group-item list-group-item-success"> {{ p.type }} is paid. The amount that is paid is ${{ p.amount }}.</li>
+                {% endif %}
+                {% empty %}
+                    <p>Nothing is paid.</p>
+            {% endfor %}
+        </ul>
+        <br>
+    </div>
+{% endblock %}

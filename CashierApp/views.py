@@ -7,9 +7,9 @@ from .models import Resident, Payment
 from CashierApp.forms import CreateUserForm, CreateResidentForm, CreatePaymentForm
 
 
-# Create your views here.
+# Views
 
-
+# Class based view.
 class RegistrationView(TemplateView):
     template_name = 'registration.html'
 
@@ -24,6 +24,10 @@ class ResidentsView(TemplateView):
 
 class SingleResidentView(TemplateView):
     template_name = 'resident.html'
+
+
+class PersonDetailsView(TemplateView):
+    template_name = 'persondetails.html'
 
 
 def index(request):
@@ -116,3 +120,18 @@ def addpayment(request):
     else:
         form = CreatePaymentForm()
     return render(request, 'payment.html', {'form': form})
+
+
+def persondetails(request, id):
+    resident = Resident.objects.get(id=id)
+    payments = Payment.objects.filter(resident__id=id)
+    context = {'resident': resident, 'payments': payments}
+    return render(request, 'persondetails.html', context)
+
+
+def pay(request, id):
+    payment = Payment.objects.get(id=id)
+    payment.status = "Paid"
+    payment.save()
+    resident = payment.resident
+    return redirect(f'/persondetails/{resident.id}/')

@@ -14,7 +14,10 @@
                 <p>{{ r.full_name }}</p>
             </div>
             <div class="col-2">
-                <a href="/index">Details</a>
+{#                <form action="/persondetails/">#}
+{#                    <button type="submit" class="btn btn-dark btn1">Details</button>#}
+{#                </form>#}
+                <a class="btn btn-dark" href="{% url 'persondetails' r.id %}">Details</a>
             </div>
         </div>
             {% empty %}
@@ -24,14 +27,5 @@
         <form action="/resident/">
             <button type="submit" class="btn btn-dark btn1">Add resident</button>
         </form>
-{#        <ul class="list-group list-group-flush">#}
-{#            <div class="row">#}
-{#                <li class="list-group-item">An item</li>#}
-{#            </div>#}
-{#          <li class="list-group-item">A second item</li>#}
-{#          <li class="list-group-item">A third item</li>#}
-{#          <li class="list-group-item">A fourth item</li>#}
-{#          <li class="list-group-item">And a fifth one</li>#}
-{#        </ul>#}
     </div>
 {% endblock %}

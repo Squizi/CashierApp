@@ -5,6 +5,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from .models import Resident, Payment
 from CashierApp.forms import CreateUserForm, CreateResidentForm, CreatePaymentForm
+import smtplib
+import ssl
+from email.mime.text import MIMEText as text
+import json
 
 
 # Views
@@ -134,4 +138,27 @@ def pay(request, id):
     payment.status = "Paid"
     payment.save()
     resident = payment.resident
+    message = f"""You have successfully paid ${payment.amount} for {payment.type}."""
+
+    sendemail(resident.email, message)
     return redirect(f'/persondetails/{resident.id}/')
+
+
+def sendemail(receiver, message):
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "nefyna.emailservice@gmail.com"  # Sender's email address
+
+    msg = text(message)
+    msg['From'] = sender_email
+    msg['To'] = receiver
+    msg['Subject'] = 'Your Cashier payment'
+
+    with open("./Cashier/credentials.json", "r") as jsonfile:
+        data = json.load(jsonfile)
+        password = data["password"]
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver, msg.as_string())

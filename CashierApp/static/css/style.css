@@ -11,5 +11,5 @@ h1 {
 }
 
 .btn1{
-    align-self: end;
+    float: right;
 }

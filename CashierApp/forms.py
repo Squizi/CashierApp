@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .models import Cashier, Resident, Payment
 
 
+# Form which inherits the default class UserCreationForm
 class CreateUserForm(UserCreationForm):
     block = forms.CharField(max_length=255, required=True, help_text='Required. Has len 255.')
 
@@ -13,6 +14,7 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'block']
 
 
+# Form which inherits the Model class Residents
 class CreateResidentForm(forms.ModelForm):
 
     class Meta:
@@ -20,6 +22,7 @@ class CreateResidentForm(forms.ModelForm):
         fields = ['full_name', 'email', 'apartment']
 
 
+# Form which inherits the Model class Payments
 class CreatePaymentForm(forms.ModelForm):
 
     class Meta:
